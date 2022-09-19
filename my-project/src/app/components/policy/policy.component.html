@@ -1,0 +1,80 @@
+
+  <div class="container text-center">
+    <h1>{{title}}</h1>
+    <br>
+    <input id="token" type="text" class="form-control" autocomplete="off" placeholder="&#61442;  Please enter Token Key">
+   <br>
+    <button type="submit" class="btn btn" style="background-color: #91b8da;" (click)="getPolicy()">Submit</button>
+  </div>
+  <div class="container"  id="excel-allTable">
+    <div class="row" >
+      <div class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Please enter schedule">
+      </div>
+      <div *ngFor="let item of zoneGroup | keyvalue">   
+        <div id="excel-content">
+          <div id="{{item.key}}" >
+          <br>
+             <tr>
+               <th scope="row">Zone: {{item.key}}</th>
+             </tr>
+             <div style="overflow-x:auto;">
+           <table class="table" >
+             <thead>
+                 <tr>
+                   <th scope="col">#</th>
+                   <th scope="col">Source zone</th>
+                   <th scope="col">Destination zone</th>
+                   <th scope="col">Name</th>
+                   <th scope="col">Source</th>
+                   <th scope="col">Destination</th>
+                   <th scope="col">Service</th>
+                   <th scope="col">Schedule</th>
+                 </tr>
+             </thead>
+           <tbody>
+                <tr *ngFor="let value of item.value | filter:searchText ">
+                   <th scope="row">{{value.policyid}}</th>
+                   <td scope="row">{{value.srcintf[0].name}}</td>
+                   <td scope="row">{{value.dstintf[0].name}}</td>
+                   <td scope="row">{{value.name}}</td>
+                   <td >
+                    <ul scope="row" *ngFor="let src of value.srcaddr ">
+                      <p content="width=device-width" >'{{src.name}}' </p>
+                    </ul>
+                   </td>
+                   <td >
+                    <ul scope="row" *ngFor="let dst of value.dstaddr ">
+                    <p content="width=device-width" >'{{dst.name}}'</p>
+                  </ul>
+                   </td> 
+                   <td >
+                    <ul scope="row" *ngFor="let srvc of value.service ">
+                    <p content="width=device-width" >'{{srvc.name}}'</p>
+                  </ul>
+                   </td> 
+                   <td scope="row">{{value.schedule}}</td>
+                 </tr>
+           </tbody>
+             <br>
+           </table>
+          <button class="shadow lg p-2 mb-7 bg-blue rounded" (click)="exportExcel(item.key,item.key)">Export Excel</button>
+      </div>
+         
+        </div>
+    <br>
+        </div>
+      </div>
+         <button  class="shadow lg p-3 mb-8 bg-blue rounded" style="width:100%" (click)="exportAllExcel()"> Export All Zones </button>
+   </div>
+  </div>
+
+<br>
+<br>
+
+
+
+
+
+
+
